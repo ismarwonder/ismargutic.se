@@ -1,0 +1,127 @@
+/* ismargutic.se — shared styles (index + homelab) */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #e8efe9;
+  --surface: #f6faf7;
+  --surface-2: #edf3ef;
+  --text: #141a16;
+  --muted: #46524b;
+  --dim: #728078;
+  --green: #16803f;
+  --green-bright: #1fbf5a;
+  --green-glow: rgba(31, 191, 90, 0.35);
+  --green-soft: #c8e8d4;
+  --amber: #9a7018;
+  --rose: #a84848;
+  --border: #c5d4cb;
+  --shell-bg: #161b18;
+  --shell-bar: #121614;
+  --shell-border: #2a332d;
+  --card: rgba(246, 250, 247, 0.88);
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 1.0625rem;
+  min-height: 100vh;
+}
+
+/* layered bg */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  background:
+    radial-gradient(ellipse 90% 60% at 0% -10%, rgba(31, 191, 90, 0.12), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(42, 100, 148, 0.06), transparent 50%);
+}
+
+body::after {
+  background-image:
+    radial-gradient(circle at center, rgba(22, 128, 63, 0.14) 1px, transparent 1px),
+    linear-gradient(rgba(22, 128, 63, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 128, 63, 0.035) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px, 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 20%, transparent 75%);
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+  overflow-anchor: auto;
+}
+
+/* entrance */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { animation: rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .reveal-1 { animation-delay: 0.05s; }
+  .reveal-2 { animation-delay: 0.12s; }
+  .reveal-3 { animation-delay: 0.2s; }
+  .reveal-4 { animation-delay: 0.28s; }
+  .reveal-5 { animation-delay: 0.36s; }
+  .reveal-6 { animation-delay: 0.44s; }
+  .reveal-7 { animation-delay: 0.52s; }
+  .reveal-8 { animation-delay: 0.6s; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* toolbar */
+.page-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.page-toolbar .top-nav {
+  margin-bottom: 0;
+}
+
+.page-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.theme-toggle {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--dim);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-toggle:hover { color: var(--green); border-color: var(--green-soft); }
