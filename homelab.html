@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Homelab — ismargutic.se</title>
+  <meta name="description" content="Det som kör hemma — problem, beslut och dokumentation.">
+  <meta name="view-transition" content="same-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <div class="page">
+
+    <div class="page-toolbar reveal">
+      <nav class="top-nav"><a href="index.html">← ismargutic.se</a></nav>
+      <div class="page-tools">
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Växla tema" aria-pressed="false">☾</button>
+      </div>
+    </div>
+
+    <header class="hero hero--watermark-lab reveal reveal-2">
+      <h1>Det som kör hemma.<br><em data-swap="hero-em">Och varför jag skrev ner det.</em></h1>
+      <p class="hero-intro cursor-line" data-swap="hero-intro" data-swap-animate data-typewriter data-typewriter-mode="words" data-typewriter-ms="22" data-typewriter-text="Jag self-hostar som hobby — inte för att det låter coolt, utan för att jag vill förstå vad som faktiskt händer mellan appen jag öppnar och disken där filen ligger. Det mesta av arbetet har inte varit installation. Det har varit att lista ut varför något slutade fungera, och se till att jag minns svaret om ett halvår."><noscript>Jag self-hostar som hobby — inte för att det låter coolt, utan för att jag vill förstå vad som faktiskt händer mellan appen jag öppnar och disken där filen ligger. Det mesta av arbetet har inte varit installation. Det har varit att lista ut varför något slutade fungera, och se till att jag minns svaret om ett halvår.</noscript></p>
+      <p class="hero-aside" data-swap="hero-aside">
+        Det här är inte ett datacenter. Det är en begagnad Lenovo M70q med Proxmox,
+        LXCs för appar, en OMV-vm för lagring — och en hög markdown-filer. Texten här
+        är en kortversion; den riktiga dokumentationen skriver jag för mig själv.
+      </p>
+    </header>
+
+    <section class="tldr reveal reveal-3" aria-labelledby="tldr-heading" id="tldr-heading">
+      <p class="section-label">tldr</p>
+      <div class="tldr-card">
+        <div class="tldr-header">
+          <span class="tldr-tag" data-swap="tldr-tag">git log --oneline --graph</span>
+          <span class="tldr-meta" data-swap="tldr-meta">hela sidan i korthet · ~3 min</span>
+        </div>
+        <div class="git-log" role="list">
+          <div class="git-commit git-commit--past git-commit--body" role="listitem">
+            <span class="git-graph">*</span>
+            <span class="git-hash">a1b2c3d</span>
+            <span class="git-subject" data-swap="git1-subject">test: USB-sticka på gamingdatorn</span>
+            <p class="git-body" data-swap="git1-body">OpenMediaVault på sticka, en gammal disk — billigt sätt att testa self-hosting. Belastade GPU:n och drog el när jag ville spela.</p>
+          </div>
+          <div class="git-commit git-commit--body" role="listitem">
+            <span class="git-graph">*</span>
+            <span class="git-hash">d4e5f6a</span>
+            <span class="git-subject" data-swap="git2-subject">hårdvara: Lenovo M70q + 2×8 TB</span>
+            <p class="git-body" data-swap="git2-body">Begagnad minipc, diskar i USB-kabinetter. Proxmox dygnet runt — snapshots och LXCs utan att sabba gamingdatorn.</p>
+          </div>
+          <div class="git-commit git-commit--body" role="listitem">
+            <span class="git-graph">*</span>
+            <span class="git-hash">7b8c9d0</span>
+            <span class="git-subject" data-swap="git3-subject">lagring: Proxmox kör appar · OMV sköter diskarna</span>
+            <p class="git-body" data-swap="git3-body">OMV i VM med USB-passthrough. MergerFS-pool + SnapRAID-paritet. Immich mountar via NFS — en sökväg, inte RAID-detaljer.</p>
+          </div>
+          <div class="git-commit git-commit--body" role="listitem">
+            <span class="git-graph">*</span>
+            <span class="git-hash">e1f2a3b</span>
+            <span class="git-subject" data-swap="git4-subject">backup: tre lager, en kabel</span>
+            <p class="git-body" data-swap="git4-body">SnapRAID mot diskdöd. Nattjobb fyller poolen. Offline: märkt USB-port → udev → rsync → mejl. Samma disk som nödlösning vid haveri.</p>
+          </div>
+          <div class="git-commit git-commit--body" role="listitem">
+            <span class="git-graph">*</span>
+            <span class="git-hash">c4d5e6f</span>
+            <span class="git-subject" data-swap="git5-subject">utåt: Tailscale + Strato VPS</span>
+            <p class="git-body" data-swap="git5-body">Subnet router utan port forward. ismargutic.se terminierar HTTPS och tunnlar via Tailscale — publik domän, privat homelab.</p>
+          </div>
+        </div>
+        <div class="tldr-today">
+          <p class="tldr-today-label" data-swap="tldr-today-label">idag · drift</p>
+          <p class="tldr-today-body" data-swap="tldr-today-body">
+            M70q med Proxmox, OMV-VM (2×8&nbsp;TB pool), Immich för foton i stället för
+            iCloud-hyra, Tailscale för fjärråtkomst, Strato-VPS för ismargutic.se.
+            Backup sköter sig själv om nätterna; offline-kopian kräver bara rätt USB-port.
+            Det som tog tid var inte verktygen — utan att lita på att det håller när någon
+            annan faktiskt bryr sig om bilderna.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-4" aria-labelledby="vad-heading" id="vad-heading">
+      <p class="section-label">perspektiv</p>
+      <h2 data-swap="vad-h2">Vad som faktiskt tog tid</h2>
+      <div class="prose">
+        <p data-swap="vad-p1">
+          Setup tar en helg. Drift tar år — om man gör det ordentligt. Det
+          jag lärt mig hemma har mest kommit från saker som gick sönder: backup
+          som inte gick att lita på, nätverk som såg rätt ut i ett webbgränssnitt
+          men inte utifrån, en domän som behövde peka någonstans utan att
+          blotta hela hemnätet.
+        </p>
+        <p data-swap="vad-p2">
+          Det här handlar mindre om vilka verktyg jag valde och mer om
+          vilka problem jag stötte på — och hur jag tänkte mig igenom dem.
+        </p>
+      </div>
+
+      <div class="shell shell--spaced tech-only" role="img" aria-label="Arkitekturöversikt — hovra noder">
+        <div class="shell-bar">
+          <span></span><span></span><span></span>
+          <span class="shell-title">vim — ~/homelab/map.txt</span>
+        </div>
+        <div class="shell-body">
+          <div class="net-map" id="net-map">
+            <p class="net-hint" data-swap="net-hint">hovra en nod — flödet highlightas</p>
+            <div class="net-tier">
+              <span class="net-node" tabindex="0" data-id="internet" data-route="public">internet</span>
+            </div>
+            <span class="net-edge" data-from="internet" data-to="vps"></span>
+            <div class="net-tier">
+              <span class="net-node" tabindex="0" data-id="vps" data-route="public">strato vps · caddy</span>
+            </div>
+            <p class="net-connector">│ tailscale</p>
+            <div class="net-tier">
+              <span class="net-node" tabindex="0" data-id="tailscale" data-route="public">tailscale</span>
+              <span class="net-node" tabindex="0" data-id="hemnat" data-route="storage">hemnät · router</span>
+            </div>
+            <span class="net-edge" data-from="hemnat" data-to="proxmox"></span>
+            <div class="net-tier">
+              <span class="net-node" tabindex="0" data-id="proxmox" data-route="storage">proxmox · m70q</span>
+              <span class="net-node" tabindex="0" data-id="immich" data-route="photos">lxc · immich</span>
+            </div>
+            <span class="net-edge" data-from="immich" data-to="omv"></span>
+            <span class="net-edge" data-from="proxmox" data-to="omv"></span>
+            <div class="net-tier">
+              <span class="net-node" tabindex="0" data-id="omv" data-route="storage">vm · omv 7</span>
+              <span class="net-node" tabindex="0" data-id="nfs" data-route="photos">nfs</span>
+              <span class="net-node" tabindex="0" data-id="pool" data-route="photos">MediaPool</span>
+              <span class="net-node" tabindex="0" data-id="usb" data-route="storage">offline USB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-5" aria-labelledby="infra-heading" id="infra-heading">
+      <p class="section-label">infrastruktur</p>
+      <h2 data-swap="infra-h2">Proxmox och OMV — vem gör vad</h2>
+      <div class="prose">
+        <p data-swap="infra-p1">
+          Det började inte så här. Först körde jag <strong>OpenMediaVault på en USB-sticka</strong>
+          kopplad till gamingdatorn, med en gammal hårddisk som enda lagring — rimligt sätt
+          att testa om self-hosting var värt det. Det fungerade, men var inte hållbart:
+          disken och containrarna belastade GPU:n, datorn blev varm och drog el även när
+          jag egentligen ville spela.
+        </p>
+        <p data-swap="infra-p2">
+          Så jag köpte en begagnad <strong>Lenovo ThinkCentre M70q</strong> och två
+          8&nbsp;TB-diskar till — interna hårddiskar i externa kabinetter via USB.
+          Proxmox på egen hårdvara, NAS:en kör dygnet runt utan att störa gamingdatorn.
+          Snapshots, schemalagd backup och isolerade LXCs/VM:er var bonus — inte huvudskälet,
+          men det som gjorde att jag vågade experimentera mer utan att vara rädd att sabba allt.
+        </p>
+        <p data-swap="infra-p3">
+          Jag delade upp det med flit. <strong>Proxmox</strong> kör själva hårdvaran och
+          håller appar isolerade i egna LXCs. <strong>OMV</strong> (OpenMediaVault) är en
+          VM dedikerad till det tråkiga men viktiga: diskar, pool, paritet, Docker för
+          saker som hör hemma vid lagringen.
+        </p>
+        <p data-swap="infra-p4">
+          Apparna behöver inte veta hur SnapRAID fungerar — de mountar bara en sökväg.
+          OMV behöver inte köra Immich — den delar ut filer via NFS till en LXC som
+          sköter appen. När något strular vet jag ungefär vilken box jag ska öppna först.
+        </p>
+      </div>
+
+      <div class="infra-grid">
+        <div class="infra-card">
+          <h3 data-swap="proxmox-h3">proxmox · hypervisor</h3>
+          <p data-swap="proxmox-p">Lenovo M70q i hemmet. Här skapas och startas allt.</p>
+          <ul>
+            <li data-swap="proxmox-li1">LXCs för appar (Immich, Tailscale, …)</li>
+            <li data-swap="proxmox-li2">OMV som VM — inte direkt på värden</li>
+            <li data-swap="proxmox-li3">USB-passthrough av diskar till OMV-vm:en</li>
+            <li data-swap="proxmox-li4">Veckovis backup av VM/LXC-konfig</li>
+          </ul>
+        </div>
+        <div class="infra-card">
+          <h3 data-swap="omv-h3">omv 7 · lagring &amp; tjänster</h3>
+          <p data-swap="omv-p">NAS-rollen. Det mesta som landar på disk går hit.</p>
+          <ul>
+            <li data-swap="omv-li1">MergerFS-pool — appar pekar på en sökväg</li>
+            <li data-swap="omv-li2">SnapRAID-paritet mot diskhaveri</li>
+            <li data-swap="omv-li3">Extern disk för offline-kopia (kopplas in vid behov)</li>
+            <li data-swap="omv-li4">Docker Compose (t.ex. nedladdning)</li>
+            <li data-swap="omv-li5">NFS ut till Immich-LXC</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="shell shell--spaced tech-only" role="img" aria-label="Rollfördelning">
+        <div class="shell-bar">
+          <span></span><span></span><span></span>
+          <span class="shell-title">cat — grundprincip.txt</span>
+        </div>
+        <div class="shell-body">
+          <pre><span class="cm"># proxmox = var saker körs</span>
+<span class="cm"># omv       = var filer bor + paritet + offline-backup</span>
+<span class="cm"># lxc       = en app, en container, en uppgift</span>
+
+<span class="g">immich-lxc</span>  ──nfs──►  <span class="a">omv:/MediaPool</span>
+<span class="g">natt 03:00</span>            <span class="a">snapraid sync</span>  (i omv)
+<span class="g">sön 04:30</span>             <span class="a">vzdump</span>         (i proxmox)</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-7" aria-labelledby="projekt-heading" id="projekt-heading">
+      <p class="section-label">djupdyk</p>
+      <h2 data-swap="projekt-h2">Fyra saker som inte var självklara</h2>
+
+      <div class="stories">
+
+        <article class="story story--photo">
+          <p class="story-tag" data-swap="photo-tag">foton · icloud</p>
+          <h3 data-swap="photo-h3">Foton som någon annan faktiskt bryr sig om</h3>
+          <p class="story-lead" data-swap="photo-lead" data-swap-animate>
+            Apple ville ha 129 kr i månaden för 2 TB i iCloud — i princip resten av livet.
+            Räknade på det och insåg att det blir tiotusentals kronor, kanske mer, för att
+            lagra bilder jag redan äger.
+          </p>
+
+          <div class="code-play" aria-label="Räkna iCloud-kostnad över tid">
+            <div class="code-play-bar tech-only">
+              <span></span><span></span><span></span>
+              <span class="code-play-title">kostnad.ts</span>
+            </div>
+            <div class="code-play-body">
+              <pre class="tech-only"><span class="kw">const</span> PRIS_2TB = <span class="num">129</span>; <span class="cm">// kr/mån</span>
+
+<span class="kw">function</span> <span class="fn">hyraFörEvigt</span>(år: <span class="ty">number</span>) {
+  <span class="kw">return</span> PRIS_2TB * <span class="num">12</span> * år;
+}
+
+<span class="fn">hyraFörEvigt</span>(<span class="hl" id="icloud-years-val">30</span>); <span class="cm">// → <span id="icloud-total" class="out">46&nbsp;440</span> kr</span></pre>
+              <label class="code-play-slider">
+                <span>år</span>
+                <input type="range" id="icloud-years" min="5" max="50" value="30" step="1" aria-label="Antal år">
+                <span class="code-play-hint">dra reglaget</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="story-body">
+            <p data-swap="photo-p1">
+              Då blev Immich inte ett tech-experiment utan ett ekonomiskt beslut. Migreringen
+              från iCloud tog tid — export i omgångar, upp till egen server utan att fylla
+              Mac-skivan — men målet var enkelt: sluta betala hyra på samma foton varje månad.
+            </p>
+            <p data-swap="photo-p2">
+              Nästa steg var att faktiskt lita på setupen. Det räckte inte att bilderna låg
+              hemma — jag behövde veta vad som händer om en disk dör. SnapRAID-paritet,
+              offline-backup, nattlig databas-dump, mejl om något går fel. Mer som något
+              andra personer är beroende av, mindre som ett hobbyprojekt.
+            </p>
+          </div>
+          <p class="story-note" data-swap="photo-note">icloud-migrering · immich · snapraid · offline-backup · nattlig pg_dump</p>
+        </article>
+
+        <article class="story story--net">
+          <p class="story-tag" data-swap="net-tag">fjärråtkomst</p>
+          <h3 data-swap="net-h3">Ut från hemmet utan att öppna dörren</h3>
+          <p class="story-lead" data-swap="net-lead" data-swap-animate>
+            Jag ville nå tjänster hemifrån när jag inte var hemma. Inte exponera hela LAN:et.
+          </p>
+          <div class="story-body">
+            <p data-swap="net-p1">
+              Port forwarding mot allt i hemnätet kändes fel. Tailscale löste det mesta —
+              subnet router så telefonen når samma adresser som hemma, Serve för HTTPS
+              utan att varje app behöver egen klient.
+            </p>
+            <p data-swap="net-p2">
+              Sedan ville jag att ismargutic.se skulle betyda något publikt, utan att
+              lägga hela homelabben direkt på internet. En VPS i kanten som terminierar
+              HTTPS och tunnlar vidare via Tailscale blev kompromissen: publik domän,
+              privat infra bakom.
+            </p>
+          </div>
+          <p class="story-note" data-swap="net-note">Tailscale subnet router · Serve · Caddy på VPS</p>
+        </article>
+
+        <article class="story story--auto">
+          <p class="story-tag" data-swap="auto-tag">drift · automation</p>
+          <h3 data-swap="auto-h3">Drift som inte beror på att jag kommer ihåg</h3>
+          <p class="story-lead" data-swap="auto-lead" data-swap-animate>
+            Setup är engångsjobb. Det som faller mellan stolarna är allt som ska hända varje natt — och varje vecka.
+          </p>
+          <div class="story-body">
+            <p data-swap="auto-p1">
+              Jag ville slippa manuella SSH-rutiner: logga in, kolla containrar, köra backup,
+              hoppas att inget missats. Istället landade det i script och schemalagda jobb —
+              Postgres-dump, app-data, SnapRAID-sync, veckovis VM-backup — plus mejl när något
+              faktiskt går fel så jag inte upptäcker det först när någon frågar var foton tagit vägen.
+            </p>
+          </div>
+          <div class="shell shell--spaced tech-only" role="img" aria-label="Crontab — nattjobb">
+            <div class="shell-bar">
+              <span></span><span></span><span></span>
+              <span class="shell-title">crontab -l</span>
+            </div>
+            <div class="shell-body">
+              <pre><span class="cm"># omv · natt</span>
+<span class="g">0 2 * * *</span>   pg_dump immich → MediaPool/backups/
+<span class="g">0 3 * * *</span>   snapraid sync
+<span class="cm"># proxmox · söndag</span>
+<span class="g">30 4 * * 0</span>  vzdump omv + lxc configs → pool</pre>
+            </div>
+          </div>
+          <div class="story-body">
+            <p data-swap="auto-p2">
+              Deploy och uppdateringar följer samma tänk: pull, build, compose up — ett kommando,
+              inte tjugo steg i huvudet. Och när något strular finns det en felsökningsfil som
+              börjar där jag slutade sist, inte på Google sida ett.
+            </p>
+          </div>
+          <p class="story-note" data-swap="auto-note">cron · bash · systemd · deploy-script · mejl vid backup-fel</p>
+        </article>
+
+        <article class="story story--backup">
+          <p class="story-tag" data-swap="backup-tag">backup</p>
+          <h3 data-swap="backup-h3">Backup — tre lager, en kabel</h3>
+          <p class="story-lead" data-swap="backup-lead" data-swap-animate>
+            När foton andra bryr sig om låg hemma räckte inte "två diskar och hoppas".
+            Jag behövde förstå vad som skyddar mot vad — och göra offline-kopian enkel
+            nog att jag faktiskt kör den.
+          </p>
+          <div class="story-body">
+            <p data-swap="backup-p1">
+              <strong>SnapRAID + MergerFS</strong> istället för klassisk RAID: en datadisk,
+              en paritetsdisk, skydd på filnivå. Pariteten är matematik vid diskdöd — inte
+              en läsbar kopia. En extern disk offline skyddar mot radering och misstag som
+              pariteten redan hunnit synca in.
+            </p>
+          </div>
+          <div class="backup-sim" id="backup-sim" aria-label="Backup — vad skyddar mot vad?"
+            data-sc-default="Välj ett scenario — lagren ovan är de tre jag menar i texten."
+            data-sc-delete="Radering syncad till paritet → offline-kopian (om körd innan) eller backup-dir på USB räddar filen. SnapRAID alone räddar inte raderade filer."
+            data-sc-disk="En datadisk dör → SnapRAID-paritet räknar om och filer återställs på kvarvarande disk. Poolen fortsätter via MergerFS."
+            data-sc-fire="Fysisk förstörelse → bara kopia utanför platsen räknas. USB offline hemma räcker inte — men den är bärbar om den faktiskt ligger någon annanstans.">
+            <p class="backup-sim-q" data-swap="backup-sim-q">Vad gick sönder?</p>
+            <div class="backup-sim-btns">
+              <button type="button" data-scenario="delete" data-swap="backup-sim-delete">Raderade en fil</button>
+              <button type="button" data-scenario="disk" data-swap="backup-sim-disk">Disk dog</button>
+              <button type="button" data-scenario="fire" data-swap="backup-sim-fire">Fysisk katastrof</button>
+            </div>
+            <div class="backup-layers">
+              <div class="backup-layer" data-swap="backup-layer-1">1 · SnapRAID-paritet</div>
+              <div class="backup-layer" data-swap="backup-layer-2">2 · Nattjobb → pool</div>
+              <div class="backup-layer" data-swap="backup-layer-3">3 · Offline USB</div>
+            </div>
+            <p class="backup-sim-result" data-swap="backup-sim-default">Välj ett scenario — lagren ovan är de tre jag menar i texten.</p>
+          </div>
+          <div class="story-body">
+            <p data-swap="backup-p2">
+              Offline hjälper bara om den körs. Därför automatiserade jag den: stick in kabeln
+              i <strong>märkta USB-porten</strong> (Proxmox port-mappar bara den till OMV —
+              fel port = inget händer), vänta på mejl, dra ur. udev känner igen diskens UUID,
+              systemd startar scriptet, rsync över hela MediaPool, avmontering, klart.
+              Samma disk är också tänkt som <strong>hot swap</strong> vid haveri — pausfil,
+              montera read-only, peka om appar till backup-kopian medan arrayen fixas.
+              Iterationer längs vägen: pausfil-logik, hantera dubbel mount, OMV som hinner före.
+            </p>
+            <p data-swap="backup-p3">
+              Nattjobb fyller poolen (Postgres, app-data, SnapRAID, vzdump) så offline-kopian
+              fångar allt i ett svep. Lärdomen som kostade mest: trodde
+              Proxmox redan backades till poolen; hittade istället 58&nbsp;GB rå avbild på NVMe
+              som varken var schemalagd eller följde kedjan.
+            </p>
+            <p class="tech-only">Hela kedjan — natt, pool, offline — sammanfattad:</p>
+          </div>
+
+          <div class="shell shell--spaced tech-only" role="img" aria-label="Backup-flöde">
+            <div class="shell-bar">
+              <span></span><span></span><span></span>
+              <span class="shell-title">cat — backup.txt</span>
+            </div>
+            <div class="shell-body">
+              <pre><span class="cm"># natt → pool → offline (kabel in, mejl, kabel ur)</span>
+
+<span class="g">02:00–03:00</span>  dumpar + snapraid  ──►  MediaPool
+<span class="g">sön 04:xx</span>     vzdump + pve-config ──►  MediaPool/backups/proxmox/
+
+<span class="b">du</span>  USB → märkt port → udev → rsync → mejl "klar"
+<span class="cm"># vid haveri: pausfil → mount ro → appar läser backup tills arrayen är fixad</span></pre>
+            </div>
+          </div>
+
+          <p class="story-note" data-swap="backup-note">snapraid · udev hotplug · rsync · pausfil · hot swap · vzdump</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="reveal reveal-8" aria-labelledby="docs-heading" id="docs-heading">
+      <p class="section-label">dokumentation</p>
+      <h2 data-swap="docs-h2">Det som egentligen är poängen</h2>
+      <div class="prose">
+        <p data-swap="docs-p">
+          Om ett halvår frågar jag mig "varför satte jag det så här?" ska svaret
+          finnas skrivet — inte i mitt huvud. Varje del av homelabben har samma
+          upplägg, från vardag till katastrof. Det är kanske det mest användbara
+          jag tagit med mig, mer än själva stacken.
+        </p>
+      </div>
+      <div class="shell shell--spaced docs-ls" role="img" aria-label="Dokumentation som ls -la">
+        <div class="shell-bar">
+          <span></span><span></span><span></span>
+          <span class="shell-title">zsh — ~/Ismars-Server</span>
+        </div>
+        <div class="shell-body">
+          <span class="shell-prompt">$</span> <span class="shell-cmd">ls -lah docs/</span>
+          <span class="ls-row">
+            <span class="perm">-rw-r--r--</span>
+            <span class="size"> 12K</span>
+            <span class="date"> mar 14</span>
+            <span class="name"> kontrollpanel.md</span>
+            <span class="desc" data-swap="docs-d1">Vardag — drift, backup, uppdatering</span>
+          </span>
+          <span class="ls-row">
+            <span class="perm">-rw-r--r--</span>
+            <span class="size"> 24K</span>
+            <span class="date"> jun 28</span>
+            <span class="name"> felsökning.md</span>
+            <span class="desc" data-swap="docs-d2">Fel — symptom, rotorsak, fix</span>
+          </span>
+          <span class="ls-row">
+            <span class="perm">-rw-r--r--</span>
+            <span class="size"> 18K</span>
+            <span class="date"> apr 02</span>
+            <span class="name"> driftsmanual.md</span>
+            <span class="desc" data-swap="docs-d3">Djup — arkitektur, återbygg från scratch</span>
+          </span>
+          <span class="ls-row">
+            <span class="perm">drwxr-xr-x</span>
+            <span class="size">  —</span>
+            <span class="date"> jul 01</span>
+            <span class="name name--dir"> scripts/</span>
+            <span class="desc" data-swap="docs-d4">Automation — deploy, backup, status</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="reveal reveal-8">
+      <span class="cm">//</span> <a href="index.html">ismargutic.se</a> · <a href="status.html">/status</a> · <span class="cm">cd ..</span>
+    </footer>
+
+  </div>
+
+  <script src="site.js"></script>
+</body>
+</html>
