@@ -21,6 +21,39 @@
       </div>
     </div>
 
+    <div class="status-wrap reveal reveal-1" id="status-wrap">
+      <div class="status" id="live-status" data-status-mode="homelab" aria-label="Driftstatus">
+        <span class="status-dot status-dot--ok" data-status-dot aria-hidden="true"></span>
+        <button type="button" class="status-branch" id="status-homelab-toggle" aria-expanded="false" aria-controls="status-explainer" title="Hur live-data funkar">homelab</button>
+        <span class="status-sep">·</span>
+        <span>lenovo m70q</span>
+        <span class="status-sep">·</span>
+        <span data-status="pool">2,4/8 TB</span>
+        <span class="status-sep">·</span>
+        <span data-status="backup">nattbackup …</span>
+        <span class="status-sep">·</span>
+        <span data-status="usb">USB-backup …</span>
+      </div>
+      <div class="status-panel" id="status-explainer" hidden>
+        <div class="code-doc code-doc--panel">
+          <p class="code-doc-file">status.md</p>
+          <div class="code-doc-body">
+            <p class="code-doc-lead" data-swap="status-lead">Raden uppdateras automatiskt — inte hårdkodad text.</p>
+            <ol class="code-doc-flow tech-only">
+              <li><strong>OMV</strong> hemma kollar disk + loggar <span class="code-doc-meta">var 15 min</span></li>
+              <li><strong>VPS</strong> skriver <code>/api/status.json</code> <span class="code-doc-meta">var 5 min</span></li>
+              <li>Sidan hämtar filen <span class="code-doc-meta">var ~60 s</span></li>
+            </ol>
+            <dl class="code-doc-dl">
+              <div><dt>pool</dt><dd data-swap="status-dd-pool">Hur full MediaPool är — TB använt / totalt.</dd></div>
+              <div><dt>nattbackup</dt><dd data-swap="status-dd-natt">När cron senast skrev till <code>backups/</code> (pg_dump, vzdump, …).</dd></div>
+              <div><dt>USB-backup</dt><dd data-swap="status-dd-usb">När offline-disken senast kopierades klart — kabel in, rsync, mejl, ur.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <header class="hero hero--watermark-lab reveal reveal-2">
       <h1>Det som kör hemma.<br><em data-swap="hero-em">Och varför jag skrev ner det.</em></h1>
       <p class="hero-intro cursor-line" data-swap="hero-intro" data-swap-animate data-typewriter data-typewriter-mode="words" data-typewriter-ms="22" data-typewriter-text="Jag self-hostar som hobby — inte för att det låter coolt, utan för att jag vill förstå vad som faktiskt händer mellan appen jag öppnar och disken där filen ligger. Det mesta av arbetet har inte varit installation. Det har varit att lista ut varför något slutade fungera, och se till att jag minns svaret om ett halvår."><noscript>Jag self-hostar som hobby — inte för att det låter coolt, utan för att jag vill förstå vad som faktiskt händer mellan appen jag öppnar och disken där filen ligger. Det mesta av arbetet har inte varit installation. Det har varit att lista ut varför något slutade fungera, och se till att jag minns svaret om ett halvår.</noscript></p>

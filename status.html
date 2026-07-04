@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>status — ismargutic.se</title>
+  <meta name="view-transition" content="same-origin">
+  <link rel="stylesheet" href="site.css">
+  <script>
+    try {
+      var t = localStorage.getItem("ismargutic-theme");
+      if (t) document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="page status-page">
+    <div class="page-toolbar">
+      <nav class="top-nav"><a href="index.html">← ismargutic.se</a></nav>
+      <div class="page-tools">
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Växla tema" aria-pressed="false">☾</button>
+      </div>
+    </div>
+    <p class="section-label">api</p>
+    <h2>/api/status.json</h2>
+    <p class="prose">Rå JSON — samma data som status-raden på sidorna pollar.</p>
+    <pre class="json-pre" id="out">laddar…</pre>
+
+    <details class="status-funfact" open>
+      <summary><span class="status-live-dot" aria-hidden="true"></span> varför finns den här sidan?</summary>
+      <div class="code-doc">
+        <p class="code-doc-file">status.schema.ts</p>
+        <div class="code-doc-body">
+          <pre class="code-doc-pre"><span class="cm">/** Det mesta på sidan är statiskt. JSON:en ovan är inte det. */</span>
+
+<span class="kw">type</span> <span class="ty">HomelabStatus</span> = {
+  <span class="prop">pool_used_tb</span>: <span class="ty">number</span>;   <span class="cm">// hur full MediaPool är</span>
+  <span class="prop">last_nightly</span>: <span class="ty">string</span>;   <span class="cm">// senaste fil i backups/</span>
+  <span class="prop">last_offline</span>: <span class="ty">string</span>;   <span class="cm">// senaste klara USB-backup</span>
+};
+
+<span class="cm">// OMV → VPS (15 min) → status.json (5 min) → homelab-sidan (60 s)</span>
+<span class="cm">// Bara siffror och datum publikt — inga adresser eller sökvägar.</span></pre>
+        </div>
+      </div>
+    </details>
+
+    <p class="aside"><span class="cm">//</span> <a href="api/status.json">api/status.json</a> · <a href="homelab.html">homelab</a></p>
+  </div>
+  <script src="site.js"></script>
+  <script>
+    fetch("api/status.json?t=" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (d) { document.getElementById("out").textContent = JSON.stringify(d, null, 2); })
+      .catch(function () { document.getElementById("out").textContent = "kunde inte hämta status"; });
+  </script>
+</body>
+</html>
