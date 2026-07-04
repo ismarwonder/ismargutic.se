@@ -21,10 +21,60 @@
       </div>
     </div>
 
-    <header class="hero reveal reveal-1">
-      <h1>Ismar Gutic.</h1>
+    <div class="status reveal" id="live-status" data-status-mode="static" aria-label="Status">
+      <span class="status-dot status-dot--ok" aria-hidden="true"></span>
+      <span class="status-branch">main</span>
+      <span class="status-sep">·</span>
+      <span>ismargutic.se</span>
+    </div>
+
+    <header class="hero hero--watermark-home reveal reveal-1">
+      <h1>Ismar Gutic.<br><em>Det här är min hörna.</em></h1>
+      <p class="hero-intro cursor-line" data-typewriter data-typewriter-mode="words" data-typewriter-ms="55" data-typewriter-text="Jag kodar, sköter en server hemma, och skriver ner det mesta så jag minns varför något sitter som det sitter"><noscript>Jag kodar, sköter en server hemma, och skriver ner det mesta så jag minns varför något sitter som det sitter</noscript></p>
     </header>
 
+    <p class="section-label reveal reveal-2">pages</p>
+
+    <div class="shell shell--spaced-bottom reveal reveal-3">
+      <div class="shell-bar">
+        <span></span><span></span><span></span>
+        <span class="shell-title">zsh — ~/public</span>
+      </div>
+      <div class="shell-body">
+        <span class="shell-prompt">$</span> <span class="shell-cmd">ls -la ./pages/</span>
+        <a class="shell-link" href="homelab.html">
+          <div class="shell-link-row">
+            <span><span class="perm">drwxr-xr-x</span>  <span class="name">homelab/</span></span>
+            <span class="open">cd →</span>
+          </div>
+          <span class="desc">backup, nätverk, saker som gick sönder — och hur jag tänkte</span>
+        </a>
+        <a class="shell-link" href="status.html">
+          <div class="shell-link-row">
+            <span><span class="perm">-rw-r--r--</span>  <span class="name">status.json</span></span>
+            <span class="open">cat →</span>
+          </div>
+          <span class="desc">live driftdata — pool, backup, homelab</span>
+        </a>
+        <span class="shell-comment"># fler mappar kommer när det finns något värt att visa</span>
+      </div>
+    </div>
+
+    <div class="glow-card reveal reveal-4" aria-hidden="true">
+      <div class="glow-card-inner">
+        <span class="kw">const</span> comingSoon = [<span class="str">"projekt"</span>, <span class="str">"cv"</span>]; <span class="cm">// TODO</span>
+      </div>
+    </div>
+
+    <p class="aside reveal reveal-5">
+      <span class="cm">/*</span> inte en portfolio än — bara saker jag faktiskt håller på med <span class="cm">*/</span>
+    </p>
+
+    <footer class="reveal reveal-5">
+      <span class="cm">//</span> byggt hemma · dokumenterat ordentligt · <a href="status.html">/status</a> · <span class="cm">eof</span>
+    </footer>
+
   </div>
+  <script src="site.js"></script>
 </body>
 </html>
