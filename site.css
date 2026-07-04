@@ -1323,3 +1323,228 @@ footer a:hover { color: var(--green); }
     padding: 0.5rem 0.65rem;
   }
 }
+
+/* ── status bar explainer (homelab) ── */
+button.status-branch {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  color: var(--green);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline dotted transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s;
+}
+
+button.status-branch:hover,
+.status-wrap--open button.status-branch {
+  text-decoration-color: var(--green-soft);
+}
+
+.status-wrap {
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 3rem;
+}
+
+.status-wrap .status {
+  margin-bottom: 0;
+}
+
+.status-wrap--open .status {
+  border-radius: 0.5rem 0.5rem 0 0;
+  border-bottom-color: transparent;
+}
+
+.status-panel {
+  max-width: 40rem;
+}
+
+.code-doc--panel {
+  margin-top: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
+  border-top: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .status-panel:not([hidden]) {
+    animation: rise 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+/* live status fun fact (status.html) */
+.status-funfact {
+  margin: 1rem 0 2.5rem;
+  max-width: 40rem;
+}
+
+.status-dot--warn {
+  background: #d4a030;
+  box-shadow: 0 0 10px rgba(212, 160, 48, 0.4);
+}
+
+.status-funfact summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--dim);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.status-funfact summary::-webkit-details-marker { display: none; }
+
+.status-funfact summary:hover { color: var(--green); }
+
+.status-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 8px var(--green-glow);
+  flex-shrink: 0;
+}
+
+.status-funfact[open] summary { color: var(--green); margin-bottom: 0.125rem; }
+
+/* code-doc — editor note, not terminal */
+.code-doc {
+  margin-top: 0.625rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.code-doc-file {
+  margin: 0;
+  padding: 0.5rem 0.875rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--green);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-doc-body {
+  padding: 0.875rem 1rem 1rem;
+}
+
+.code-doc-lead {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-bottom: 0.875rem;
+  line-height: 1.55;
+}
+
+.code-doc-flow {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.code-doc-flow li + li { margin-top: 0.35rem; }
+
+.code-doc-flow strong {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.code-doc-meta {
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  color: var(--dim);
+}
+
+.code-doc-dl {
+  margin: 0;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.code-doc-dl div {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.625rem;
+  align-items: baseline;
+  padding-top: 0.625rem;
+  border-top: 1px dashed var(--border);
+}
+
+.code-doc-dl dt {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--green);
+}
+
+.code-doc-dl dd {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.code-doc-dl code {
+  font-family: var(--mono);
+  font-size: 0.75em;
+  padding: 0.1em 0.3em;
+  background: var(--surface-2);
+  border-radius: 0.2rem;
+}
+
+.code-doc-pre {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.65;
+  color: var(--muted);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.code-doc-pre .kw { color: #7a4fa0; }
+.code-doc-pre .ty { color: #2a6494; }
+.code-doc-pre .prop { color: var(--text); }
+.code-doc-pre .cm { color: var(--dim); }
+
+@media (max-width: 420px) {
+  .code-doc-dl div { grid-template-columns: 1fr; gap: 0.2rem; }
+}
+
+@media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
+  .status-panel:not([hidden]) {
+    animation: none;
+  }
+}
+
+/* status page json block — follows page theme, not terminal shell */
+.status-page {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+}
+
+.json-pre {
+  margin-top: 1rem;
+  padding: 1rem 1.125rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  overflow: auto;
+}

@@ -1,0 +1,16 @@
+{
+  "updated": null,
+  "vps": {
+    "caddy": "unknown",
+    "tailscale": "unknown",
+    "uptime_days": null
+  },
+  "homelab": {
+    "proxmox": "unknown",
+    "backup": "unknown",
+    "pool_used_tb": null,
+    "pool_total_tb": null,
+    "last_nightly": null,
+    "last_offline": null
+  }
+}
