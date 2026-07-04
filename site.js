@@ -3,6 +3,8 @@
   "use strict";
 
   var STORAGE_THEME = "ismargutic-theme";
+  var STATUS_URL = "api/status.json";
+  var STATUS_INTERVAL = 60000;
 
   /* ── theme ── */
   function initTheme() {
@@ -23,6 +25,67 @@
       btn.setAttribute("aria-pressed", current === "dark" ? "true" : "false");
       btn.textContent = current === "dark" ? "☀" : "☾";
     }
+  }
+
+  /* ── live status ── */
+  function formatRelative(iso) {
+    if (!iso) return "okänd";
+    var diff = Date.now() - new Date(iso).getTime();
+    var h = Math.floor(diff / 3600000);
+    if (h < 1) return "nyss";
+    if (h < 24) return h + " h sedan";
+    var d = Math.floor(h / 24);
+    return d + " d sedan";
+  }
+
+  function initStatus() {
+    var bar = document.getElementById("live-status");
+    if (!bar || bar.getAttribute("data-status-mode") !== "homelab") return;
+
+    function render(data) {
+      var dot = bar.querySelector("[data-status-dot]");
+      var h = data.homelab;
+      if (!h) return;
+      var ok = h.proxmox === "ok" && h.backup === "ok";
+      if (h.backup === "stale") ok = false;
+      var pool =
+        h.pool_used_tb != null && h.pool_total_tb != null
+          ? h.pool_used_tb + "/" + h.pool_total_tb + " TB"
+          : "pool ?";
+      setText(bar, "pool", pool);
+      setText(
+        bar,
+        "backup",
+        h.last_nightly
+          ? "nattbackup · " + formatRelative(h.last_nightly)
+          : "nattbackup · okänd"
+      );
+      setText(
+        bar,
+        "usb",
+        h.last_offline
+          ? "USB-backup · " + formatRelative(h.last_offline)
+          : "USB-backup · aldrig?"
+      );
+      if (dot) {
+        dot.classList.toggle("status-dot--warn", !ok);
+        dot.classList.toggle("status-dot--ok", ok);
+      }
+    }
+
+    function setText(root, key, val) {
+      var el = root.querySelector('[data-status="' + key + '"]');
+      if (el) el.textContent = val;
+    }
+
+    function poll() {
+      fetch(STATUS_URL + "?t=" + Date.now(), { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) { if (data) render(data); })
+        .catch(function () { /* static fallback stays */ });
+    }
+    poll();
+    setInterval(poll, STATUS_INTERVAL);
   }
 
   /* ── iCloud calculator ── */
@@ -178,8 +241,24 @@
     });
   }
 
+  /* ── homelab status explainer ── */
+  function initStatusExplainer() {
+    var btn = document.getElementById("status-homelab-toggle");
+    var panel = document.getElementById("status-explainer");
+    var wrap = document.getElementById("status-wrap");
+    if (!btn || !panel || !wrap) return;
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", open ? "false" : "true");
+      panel.hidden = open;
+      wrap.classList.toggle("status-wrap--open", !open);
+    });
+  }
+
   function boot() {
     initTheme();
+    initStatus();
+    initStatusExplainer();
     initIcloud();
     initBackupSim();
     initNetMap();
@@ -188,4 +267,7 @@
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
+
+  console.assert(formatRelative(new Date(Date.now() - 7200000).toISOString()) === "2 h sedan");
+  console.assert(formatRelative(new Date(Date.now() - 86400000 * 2).toISOString()) === "2 d sedan");
 })();
