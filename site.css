@@ -1548,3 +1548,147 @@ button.status-branch:hover,
   line-height: 1.65;
   overflow: auto;
 }
+
+/* ── plain-language mode (homelab) ── */
+.has-plain-fab .page {
+  padding-bottom: 6rem;
+}
+
+.plain-toggle {
+  position: fixed;
+  z-index: 50;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  left: auto;
+  max-width: min(20rem, calc(100vw - 2rem));
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  box-shadow: 0 10px 32px rgba(10, 20, 14, 0.18);
+  transition: color 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.plain-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 36px rgba(10, 20, 14, 0.22);
+}
+
+.plain-toggle:active {
+  transform: translateY(0);
+}
+
+.plain-toggle:hover,
+.plain-toggle[aria-pressed="true"] {
+  color: var(--green);
+  border-color: var(--green-soft);
+}
+
+html.plain-swapping {
+  scroll-behavior: auto !important;
+}
+
+.homelab-plain .code-play {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--card);
+  box-shadow: none;
+}
+
+.homelab-plain .code-play-body {
+  background: transparent;
+  padding: 1rem;
+}
+
+.homelab-plain .code-play-slider {
+  border-top: 1px dashed var(--border);
+}
+
+.icloud-simple {
+  margin: 0 0 0.875rem;
+  font-size: 0.9375rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.icloud-simple p { margin: 0; }
+
+.icloud-simple-sum {
+  margin-top: 0.5rem !important;
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+.icloud-simple-sum strong {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.plain-only { display: none; }
+
+.homelab-plain .plain-only { display: block; }
+
+.homelab-plain .tech-only { display: none !important; }
+
+.homelab-plain .infra-card h3,
+.homelab-plain .story-tag,
+.homelab-plain .story-note,
+.homelab-plain .tldr-tag {
+  font-family: var(--sans);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.homelab-plain .git-subject {
+  font-family: var(--serif);
+  font-weight: 500;
+}
+
+.homelab-plain .plain-net {
+  margin: 1rem 0 1.5rem;
+  padding: 0.875rem 1rem;
+  background: var(--card);
+  border: 1px dashed var(--border);
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.homelab-plain .git-hash { display: none; }
+
+.homelab-plain .git-commit {
+  grid-template-columns: 1.25rem 1fr;
+}
+
+.homelab-plain .git-subject {
+  grid-column: 2;
+}
+
+.homelab-plain .git-body {
+  grid-column: 2;
+  border-left: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+@media (max-width: 640px) {
+  .plain-toggle {
+    right: max(0.75rem, env(safe-area-inset-right));
+    left: max(0.75rem, env(safe-area-inset-left));
+    max-width: none;
+    font-size: 0.625rem;
+    padding: 0.6rem 0.875rem;
+  }
+}

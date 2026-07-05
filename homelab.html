@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="site.css">
 </head>
-<body>
+<body class="has-plain-fab">
   <div class="page">
 
     <div class="page-toolbar reveal">
@@ -132,6 +132,8 @@
           vilka problem jag stötte på — och hur jag tänkte mig igenom dem.
         </p>
       </div>
+
+      <p class="plain-only plain-net prose" data-swap="plain-net-body">Internet → min webbsida (hyrd server) → säker tunnel hem → router → lilla datorn → bildalbum &amp; filer → USB-backup ibland.</p>
 
       <div class="shell shell--spaced tech-only" role="img" aria-label="Arkitekturöversikt — hovra noder">
         <div class="shell-bar">
@@ -271,6 +273,10 @@
 }
 
 <span class="fn">hyraFörEvigt</span>(<span class="hl" id="icloud-years-val">30</span>); <span class="cm">// → <span id="icloud-total" class="out">46&nbsp;440</span> kr</span></pre>
+              <div class="plain-only icloud-simple">
+                <p>129 kr/mån för 2 TB i iCloud.</p>
+                <p class="icloud-simple-sum"><span id="icloud-years-label">30</span> år → <strong id="icloud-total-plain">46&nbsp;440</strong> kr</p>
+              </div>
               <label class="code-play-slider">
                 <span>år</span>
                 <input type="range" id="icloud-years" min="5" max="50" value="30" step="1" aria-label="Antal år">
@@ -484,6 +490,11 @@
     </footer>
 
   </div>
+
+  <button type="button" id="plain-toggle" class="plain-toggle" aria-pressed="false" aria-label="Skriv om sidan utan teknikjargong">
+    <span class="plain-toggle-on">Jag förstår inte teknik — förklara enklare</span>
+    <span class="plain-toggle-off" hidden>Visa teknikversionen</span>
+  </button>
 
   <script src="site.js"></script>
 </body>
