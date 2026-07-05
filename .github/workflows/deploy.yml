@@ -1,0 +1,62 @@
+name: Deploy
+
+# Push till main → validera → rsync de statiska filerna till VPS:en över SSH.
+# Alla värden ligger som GitHub Secrets, aldrig i repot:
+#   SSH_HOST     värdnamn/IP till VPS:en
+#   SSH_USER     deploy-användare
+#   SSH_KEY      privat nyckel (ed25519) för den användaren
+#   KNOWN_HOSTS  serverns publika nyckel (ssh-keyscan) — undviker MITM
+#   DEPLOY_PATH  sökväg till web-roten Caddy serverar
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validera innan deploy
+        run: node scripts/check-links.mjs
+
+      - name: Konfigurera SSH
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Deploya med rsync
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.cursor' \
+            --exclude='.vscode' \
+            --exclude='scripts' \
+            --exclude='README.md' \
+            --exclude='.gitignore' \
+            --exclude='api/' \
+            -e 'ssh -i ~/.ssh/id_deploy' \
+            ./ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"

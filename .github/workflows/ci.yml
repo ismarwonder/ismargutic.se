@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Kontrollera JS-syntax
+        run: node --check site.js
+
+      - name: Kontrollera länkar och JSON
+        run: node scripts/check-links.mjs

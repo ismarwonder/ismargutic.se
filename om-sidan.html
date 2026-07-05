@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Om sidan — ismargutic.se</title>
+  <meta name="description" content="Hur den här sidan är byggd och hur den deployas — statisk kod och en liten pipeline.">
+  <meta name="view-transition" content="same-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+  <div class="page">
+
+    <div class="page-toolbar reveal">
+      <nav class="top-nav"><a href="index.html">← ismargutic.se</a></nav>
+      <div class="page-tools">
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Växla tema" aria-pressed="false">☾</button>
+      </div>
+    </div>
+
+    <div class="status reveal reveal-1" aria-label="Repo">
+      <span class="status-dot status-dot--ok" aria-hidden="true"></span>
+      <span class="status-branch">main</span>
+      <span class="status-sep">·</span>
+      <span>byggd för hand</span>
+      <span class="status-sep">·</span>
+      <span>deployad av en robot</span>
+    </div>
+
+    <header class="hero hero--watermark-home reveal reveal-2">
+      <h1>Om den här sidan.<br><em>Byggd för hand, deployad automatiskt.</em></h1>
+      <p class="hero-intro cursor-line" data-typewriter data-typewriter-mode="words" data-typewriter-ms="38" data-typewriter-text="Sidan du läser är avsiktligt enkel: ren HTML, en handskriven stylesheet och lite JavaScript. Ingen ramverksmagi, inget byggsteg — men en liten pipeline som ser till att inget trasigt når servern."><noscript>Sidan du läser är avsiktligt enkel: ren HTML, en handskriven stylesheet och lite JavaScript. Ingen ramverksmagi, inget byggsteg — men en liten pipeline som ser till att inget trasigt når servern.</noscript></p>
+    </header>
+
+    <section class="reveal reveal-3" aria-labelledby="stack-heading" id="stack-heading">
+      <p class="section-label">stacken</p>
+      <h2>Så lite som möjligt</h2>
+      <div class="prose">
+        <p>
+          Inget ramverk, ingen bundler, inga beroenden att hålla uppdaterade.
+          Tre HTML-sidor, en stylesheet uppdelad i en delad bas och lite per sida,
+          och en JS-fil för de små interaktionerna — tema, typewriter, live-status.
+          Vill man köra den lokalt räcker en enkel filserver.
+        </p>
+        <p>
+          Poängen är att sidan ska gå att förstå på fem minuter och fungera i
+          decennier. Ju mindre som kan gå sönder, desto mindre behöver jag laga.
+        </p>
+      </div>
+
+      <div class="shell shell--spaced" role="img" aria-label="Filträd">
+        <div class="shell-bar">
+          <span></span><span></span><span></span>
+          <span class="shell-title">zsh — ~/ismargutic.se</span>
+        </div>
+        <div class="shell-body">
+          <pre><span class="cm"># ren statisk sida — det här är hela stacken</span>
+<span class="g">*.html</span>       tre sidor, semantisk markup
+<span class="g">css/</span>         base + en fil per sida
+<span class="g">site.js</span>      tema · typewriter · live-status
+<span class="g">api/</span>         status.json (skrivs av servern)
+
+<span class="a">build-steg</span>   <span class="cm"># inga</span></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-4" aria-labelledby="deploy-heading" id="deploy-heading">
+      <p class="section-label">deploy</p>
+      <h2>Från push till live utan att jag rör servern</h2>
+      <div class="prose">
+        <p>
+          Förr laddade jag upp filer för hand. Det blev fel förr eller senare —
+          en glömd fil, en bruten länk, fel version. Nu gör GitHub Actions jobbet:
+          jag pushar, en robot kontrollerar och kopierar. Rör jag inte servern
+          kan jag inte råka trasa den.
+        </p>
+      </div>
+
+      <div class="shell shell--spaced" role="img" aria-label="Deploy-flöde">
+        <div class="shell-bar">
+          <span></span><span></span><span></span>
+          <span class="shell-title">github actions — deploy.yml</span>
+        </div>
+        <div class="shell-body">
+          <pre><span class="g">$</span> git push origin main
+
+  <span class="g">├─ ci</span>       node --check · check-links.mjs
+  <span class="a">├─ deploy</span>   rsync -az --delete  ──►  VPS
+  <span class="b">└─ live</span>     caddy serverar · https
+
+<span class="cm"># hemligheter (nyckel, host, sökväg) ligger i GitHub Secrets — aldrig i repot</span></pre>
+        </div>
+      </div>
+
+      <div class="code-doc">
+        <p class="code-doc-file">pipeline.md</p>
+        <div class="code-doc-body">
+          <p class="code-doc-lead">Fyra steg, noll manuella filöverföringar:</p>
+          <ol class="code-doc-flow">
+            <li>Jag pushar till <strong>main</strong> <span class="code-doc-meta">eller kör den manuellt</span></li>
+            <li><strong>CI</strong> validerar länkar, JSON och JS-syntax</li>
+            <li>Går det igenom kör <strong>deploy</strong> rsync över SSH</li>
+            <li><strong>Caddy</strong> på VPS:en serverar det nya — HTTPS via Tailscale hem</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <p class="aside reveal reveal-5">
+      <span class="cm">/*</span> samma tänk som homelabben: automatisera det tråkiga, dokumentera resten <span class="cm">*/</span>
+    </p>
+
+    <footer class="reveal reveal-5">
+      <span class="cm">//</span> <a href="index.html">ismargutic.se</a> · <a href="homelab.html">/homelab</a> · <a href="status.html">/status</a> · <span class="cm">eof</span>
+    </footer>
+
+  </div>
+  <script src="site.js"></script>
+</body>
+</html>
