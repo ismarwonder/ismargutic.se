@@ -28,14 +28,14 @@
   }
 
   /* ── live status ── */
-  function formatRelative(iso) {
-    if (!iso) return "okänd";
+  function formatRelative(iso, compact) {
+    if (!iso) return compact ? "?" : "okänd";
     var diff = Date.now() - new Date(iso).getTime();
     var h = Math.floor(diff / 3600000);
     if (h < 1) return "nyss";
-    if (h < 24) return h + " h sedan";
+    if (h < 24) return compact ? h + " h" : h + " h sedan";
     var d = Math.floor(h / 24);
-    return d + " d sedan";
+    return compact ? d + " d" : d + " d sedan";
   }
 
   function initStatus() {
@@ -57,15 +57,15 @@
         bar,
         "backup",
         h.last_nightly
-          ? "nattbackup · " + formatRelative(h.last_nightly)
-          : "nattbackup · okänd"
+          ? "natt · " + formatRelative(h.last_nightly, true)
+          : "natt · ?"
       );
       setText(
         bar,
         "usb",
         h.last_offline
-          ? "USB-backup · " + formatRelative(h.last_offline)
-          : "USB-backup · aldrig?"
+          ? "usb · " + formatRelative(h.last_offline, true)
+          : "usb · ?"
       );
       if (dot) {
         dot.classList.toggle("status-dot--warn", !ok);

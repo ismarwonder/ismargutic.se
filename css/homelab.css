@@ -37,13 +37,20 @@ button.status-branch:hover,
 }
 
 .status-wrap {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
   margin-bottom: 3rem;
 }
 
 .status-wrap .status {
   margin-bottom: 0;
+  flex-wrap: nowrap;
+  gap: 0.4rem 0.65rem;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .status-wrap--open .status {
