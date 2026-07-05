@@ -50,22 +50,22 @@
       if (h.backup === "stale") ok = false;
       var pool =
         h.pool_used_tb != null && h.pool_total_tb != null
-          ? h.pool_used_tb + "/" + h.pool_total_tb + " TB"
-          : "pool ?";
+          ? "pool · " + h.pool_used_tb + "/" + h.pool_total_tb + " TB"
+          : "pool · ?";
       setText(bar, "pool", pool);
       setText(
         bar,
         "backup",
         h.last_nightly
-          ? "natt · " + formatRelative(h.last_nightly, true)
-          : "natt · ?"
+          ? "nattbackup · " + formatRelative(h.last_nightly, true)
+          : "nattbackup · okänd"
       );
       setText(
         bar,
         "usb",
         h.last_offline
-          ? "usb · " + formatRelative(h.last_offline, true)
-          : "usb · ?"
+          ? "USB-backup · " + formatRelative(h.last_offline, true)
+          : "USB-backup · aldrig?"
       );
       if (dot) {
         dot.classList.toggle("status-dot--warn", !ok);
