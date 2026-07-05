@@ -8,6 +8,7 @@ utan byggsteg: ren HTML, en delad stylesheet och en delad script-fil.
 ```
 index.html              landningssida
 homelab.html            dokumentation av homelabben (Proxmox/OMV/Immich/Tailscale)
+compys.html             min roll som backend lead & delägare på Compys (.NET/Mongo/Azure/Stripe)
 status.html             visar rå driftdata
 om-sidan.html           hur sidan är byggd och deployad (stack + pipeline)
 api/status.json         live-status (pool, backup) — skrivs av servern, inte av handen

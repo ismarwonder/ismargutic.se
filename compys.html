@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--
+  compys.html — projektsida: min roll som backend lead & delägare på Compys.
+  Del av ismargutic.se. Statisk HTML, delade komponenter från css/base.css.
+  Håller sig till publik nivå: arkitektur och angreppssätt, inga hemligheter.
+-->
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compys — ismargutic.se</title>
+  <meta name="description" content="Backend lead och delägare på Compys — jag byggde API:et och äger infrastrukturen: .NET 8, CQRS/MediatR, MongoDB + PostgreSQL, Azure och Terraform.">
+  <meta name="view-transition" content="same-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <script>
+    try {
+      var t = localStorage.getItem("ismargutic-theme");
+      if (t) document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div class="page">
+
+    <div class="page-toolbar reveal">
+      <nav class="top-nav"><a href="index.html">← ismargutic.se</a></nav>
+      <div class="page-tools">
+        <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Växla tema" aria-pressed="false">☾</button>
+      </div>
+    </div>
+
+    <div class="status reveal reveal-1" aria-label="Roll">
+      <span class="status-dot status-dot--ok" aria-hidden="true"></span>
+      <span class="status-branch">backend lead &amp; delägare</span>
+      <span class="status-sep">·</span>
+      <a href="https://compys.se" class="status-branch" rel="noopener">compys.se</a>
+      <span class="status-sep">·</span>
+      <span>alpha</span>
+    </div>
+
+    <header class="hero hero--watermark-compys reveal reveal-2">
+      <h1>Compys.se<br><em>Jag byggde baksidan.</em></h1>
+      <p class="hero-intro cursor-line" data-typewriter data-typewriter-mode="words" data-typewriter-ms="40" data-typewriter-text="Compys är en liten startup som matchar juniora tech-talanger med bolag. Jag är delägare och backend lead — jag byggde API:et och äger infrastrukturen, från arkitektur och databas till Azure, betalningar och säkerhet."><noscript>Compys är en liten startup som matchar juniora tech-talanger med bolag. Jag är delägare och backend lead — jag byggde API:et och äger infrastrukturen, från arkitektur och databas till Azure, betalningar och säkerhet.</noscript></p>
+      <p class="hero-aside reveal reveal-3">Fem personer, fortfarande i alpha. Backend och drift gör jag på fritiden.</p>
+    </header>
+
+    <section class="reveal reveal-3" aria-labelledby="vad-heading">
+      <p class="section-label">vad</p>
+      <h2 id="vad-heading">Headhunting för juniora, utan CV-högar</h2>
+      <div class="prose">
+        <p>
+          Compys hjälper startups att hitta juniora utvecklare, praktikanter och
+          första-anställningar genom personlig matchning i stället för
+          ansökningsflod. Ett fåtal relevanta kandidater per roll — inte
+          hundratals CV:n att sålla i.
+        </p>
+        <p>
+          Mitt jobb är allt som händer bakom knapparna: API:et som driver
+          matchningen, databasen där profiler och roller lever, och
+          infrastrukturen som håller det igång på Azure.
+        </p>
+      </div>
+    </section>
+
+    <section class="reveal reveal-4" aria-labelledby="roll-heading">
+      <p class="section-label">rollen</p>
+      <h2 id="roll-heading">Backend lead &amp; delägare</h2>
+      <div class="prose">
+        <p>
+          Som backend lead sätter jag den tekniska riktningen: arkitektur,
+          kodstandard och de riktlinjer teamet bygger efter. Som delägare bär jag
+          också ansvaret för att det vi levererar faktiskt håller — skalbart,
+          säkert och möjligt att förvalta.
+        </p>
+      </div>
+
+      <div class="code-doc">
+        <p class="code-doc-file">ansvar.md</p>
+        <div class="code-doc-body">
+          <dl class="code-doc-dl">
+            <div>
+              <dt>arkitektur</dt>
+              <dd>Design av backend-systemet med fokus på prestanda, säkerhet och att det går att bygga vidare på.</dd>
+            </div>
+            <div>
+              <dt>ledarskap</dt>
+              <dd>Teknisk riktning för teamet — best practices, kodstandard och beslut som håller över tid.</dd>
+            </div>
+            <div>
+              <dt>api</dt>
+              <dd>Robusta API:er och serverkomponenter i .NET 8 och C# v8.</dd>
+            </div>
+            <div>
+              <dt>databas</dt>
+              <dd>Datamodell och frågor i MongoDB, optimerade för snabb hämtning.</dd>
+            </div>
+            <div>
+              <dt>moln</dt>
+              <dd>Azure-baserad infrastruktur och drift, byggd för att skala.</dd>
+            </div>
+            <div>
+              <dt>betalningar</dt>
+              <dd>Stripe-integration för säkra betalningsflöden.</dd>
+            </div>
+            <div>
+              <dt>säkerhet</dt>
+              <dd>Säkerhetsstandarder och proaktivt skydd av data och system.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-5" aria-labelledby="stack-heading">
+      <p class="section-label">stacken</p>
+      <h2 id="stack-heading">Tråkig kärna, medvetna val ovanpå</h2>
+      <div class="prose">
+        <p>
+          Ett litet team har inte råd med teknik som bara en person förstår, så
+          kärnan är medvetet konventionell: .NET 8 och C#. Det intressanta ligger
+          i valen ovanpå — rätt databas per domän, riktig molnplattform och en
+          arkitektur som går att bygga vidare på utan att riva grunden.
+        </p>
+        <p>
+          Datan är polyglot: MongoDB där det är dokumenttungt och föränderligt,
+          PostgreSQL via EF Core där relationer och transaktioner räknas. Auth via
+          Firebase och JWT, realtidsnotiser via SignalR, betalningar via Stripe —
+          allt hostat på Azure.
+        </p>
+      </div>
+
+      <div class="shell shell--spaced" role="img" aria-label="Projektstruktur">
+        <div class="shell-bar">
+          <span></span><span></span><span></span>
+          <span class="shell-title">zsh — ~/Compy.Api</span>
+        </div>
+        <div class="shell-body">
+          <pre><span class="cm"># .NET 8 web api — vertikala slices, en mapp per domän (~27 st)</span>
+<span class="g">Features/&lt;Domain&gt;/</span>
+  <span class="g">Application/</span>     CQRS — Commands + Queries + handlers (MediatR)
+  <span class="g">Domain/</span>          entiteter · value objects · domänhändelser
+  <span class="g">Infrastructure/</span>  repositories · workers · mappning
+  <span class="g">Controllers/</span>     tunna endpoints
+<span class="g">Common/Behaviors/</span>  pipeline: validering + caching, en gång för alla
+
+<span class="a">data</span>   MongoDB + PostgreSQL (EF Core)   <span class="cm"># rätt verktyg per domän</span>
+<span class="a">auth</span>   Firebase + JWT       <span class="a">realtime</span>  SignalR
+<span class="b">host</span>   Azure                <span class="b">iac</span>       Terraform</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-6" aria-labelledby="arkitektur-heading">
+      <p class="section-label">arkitektur</p>
+      <h2 id="arkitektur-heading">En slice per feature, CQRS rakt igenom</h2>
+      <div class="prose">
+        <p>
+          Backenden är ett trettiotal vertikala slices — en mapp per domän som
+          äger hela vägen från request till svar, i stället för lager som skär
+          tvärs igenom allt. Läsning och skrivning är åtskilda med CQRS via
+          MediatR: queries hämtar, commands ändrar.
+        </p>
+        <p>
+          Det som annars upprepas i varje endpoint — validering, caching, loggning
+          — ligger som pipeline-behaviors runt varje anrop. En query behöver bara
+          säga <em>att</em> den får cachas; behaviorn sköter resten, en gång för
+          alla.
+        </p>
+      </div>
+
+      <div class="code-doc">
+        <p class="code-doc-file">CachingBehavior.cs</p>
+        <div class="code-doc-body">
+          <pre class="code-doc-pre"><span class="cm">// En query är bara data — den vet inget om cache, validering eller loggning.</span>
+<span class="kw">public record</span> <span class="ty">SearchProfilesQuery</span>(<span class="ty">string</span>? SearchQuery, <span class="ty">int</span> PageSize <span class="cm">/* … */</span>)
+    : <span class="ty">ICacheableQuery</span>&lt;<span class="ty">SearchProfilesResponse</span>&gt;
+{
+    <span class="kw">public</span> <span class="ty">string</span> <span class="prop">CacheKey</span>   =&gt; $<span class="prop">"profiles:{SearchQuery}:{PageSize}"</span>;
+    <span class="kw">public</span> <span class="ty">TimeSpan</span>? <span class="prop">Expiration</span> =&gt; <span class="ty">TimeSpan</span>.FromMinutes(<span class="prop">5</span>);
+}
+
+<span class="cm">// En pipeline-behavior lägger cachen runt varje sådan query — en gång, för alla.</span>
+<span class="kw">public class</span> <span class="ty">CachingBehavior</span>&lt;<span class="ty">TRequest</span>, <span class="ty">TResponse</span>&gt; : <span class="ty">IPipelineBehavior</span>&lt;<span class="ty">TRequest</span>, <span class="ty">TResponse</span>&gt;
+    <span class="kw">where</span> <span class="ty">TRequest</span> : <span class="ty">ICacheableQuery</span>&lt;<span class="ty">TResponse</span>&gt;
+{
+    <span class="kw">public</span> <span class="ty">Task</span>&lt;<span class="ty">TResponse</span>&gt; <span class="prop">Handle</span>(<span class="ty">TRequest</span> req, <span class="ty">RequestHandlerDelegate</span>&lt;<span class="ty">TResponse</span>&gt; next, <span class="ty">CancellationToken</span> ct)
+        =&gt; _cache.TryGetValue(req.CacheKey, <span class="kw">out</span> <span class="ty">TResponse</span>? hit) &amp;&amp; hit <span class="kw">is not null</span>
+            ? <span class="ty">Task</span>.FromResult(hit)
+            : CacheAndReturn(req, next);
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-7" aria-labelledby="bakgrund-heading">
+      <p class="section-label">bakgrund</p>
+      <h2 id="bakgrund-heading">Tungt jobb utanför request-tråden</h2>
+      <div class="prose">
+        <p>
+          Poäng, topplistor och aviseringar ska inte räknas medan användaren
+          väntar på svar. De läggs på en kö och plockas av en
+          BackgroundService-worker som kör själva jobbet som ett eget
+          MediatR-command — samma mönster som allt annat, fast utanför
+          request-tråden.
+        </p>
+      </div>
+
+      <div class="shell shell--spaced" role="img" aria-label="Bakgrundsflöde">
+        <div class="shell-bar">
+          <span></span><span></span><span></span>
+          <span class="shell-title">score-pipeline</span>
+        </div>
+        <div class="shell-body">
+          <pre><span class="a">event</span>   någon röstar på ett inlägg
+  └─ <span class="g">queue</span>     PostId läggs på en in-process-kö
+     └─ <span class="g">worker</span>    BackgroundService plockar av kön
+        └─ <span class="b">mediator.Send(</span>UpdatePostScoreCommand<span class="b">)</span>   <span class="cm"># utanför request-tråden</span>
+           └─ ny score sparas · <span class="g">SignalR</span> pushar ut till klienten</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal reveal-8" aria-labelledby="email-heading">
+      <p class="section-label">email</p>
+      <h2 id="email-heading">EmailDesigner — så marketing slipper be om kod</h2>
+      <div class="prose">
+        <p>
+          Vår marketing-person Mio ville kunna skicka snygga, stylade mejl till
+          partners och intressenter utan att gå via mig varje gång. Så jag byggde
+          EmailDesigner: ett litet fristående verktyg där hon loggar in (Firebase),
+          bygger mejlet visuellt och skickar — rakt genom vår egen backend.
+        </p>
+        <p>
+          Inget externt mejl-SaaS. Backendens EmailDomain renderar mallar med
+          Scriban, levererar via Azure Communication Services och loggar varje
+          utskick med status. Samma command/handler-mönster som resten av API:et:
+          ett SendCommunicationEmail-command in, ett spårbart EmailLog ut.
+        </p>
+      </div>
+    </section>
+
+    <section class="reveal reveal-8" aria-labelledby="infra-heading">
+      <p class="section-label">infra</p>
+      <h2 id="infra-heading">Drift på Azure — som kod, inte klick</h2>
+      <div class="prose">
+        <p>
+          Infrastrukturen är mitt bord, och den bor i <strong>Terraform</strong> —
+          inte i portalens klickträd. Hela miljön går att läsa, granska och
+          återskapa. Secrets ligger i Key Vault och aldrig i koden, filer i Blob
+          Storage, loggarna i App Service.
+        </p>
+        <p>
+          Stripe-webhooks körs idempotent: samma event kan komma två gånger utan
+          att något dubbelbokförs. Det som ska funka testas — både unit- och
+          integrationstester. Samma princip som i
+          <a href="homelab.html">homelabben</a>: automatisera det tråkiga,
+          dokumentera resten. Fortfarande en alpha byggd på fritiden, men byggd
+          för att växa.
+        </p>
+      </div>
+    </section>
+
+    <p class="aside reveal reveal-8">
+      <span class="cm">/*</span> ett riktigt projekt, inte en demo — därför står det bara det jag kan visa publikt <span class="cm">*/</span>
+    </p>
+
+    <footer class="reveal reveal-8">
+      <span class="cm">//</span> <a href="index.html">ismargutic.se</a> · <a href="https://compys.se" rel="noopener">compys.se</a> · <a href="homelab.html">/homelab</a> · <a href="om-sidan.html">/om-sidan</a> · <span class="cm">eof</span>
+    </footer>
+
+  </div>
+  <script src="site.js"></script>
+</body>
+</html>

@@ -271,6 +271,7 @@ a.status-branch:hover {
 
 .hero--watermark-home::before { content: "~/ismargutic.se"; }
 .hero--watermark-lab::before { content: "~/pages/homelab"; }
+.hero--watermark-compys::before { content: "~/pages/compys"; }
 
 .hero::before {
   position: absolute;
@@ -361,6 +362,27 @@ h2 {
 
 .prose { color: var(--muted); }
 .prose p + p { margin-top: 1rem; }
+
+.prose a,
+.hero-aside a,
+.aside a,
+.code-doc-flow a,
+footer a {
+  color: var(--green);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--green-soft);
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+.prose a:hover,
+.hero-aside a:hover,
+.aside a:hover,
+.code-doc-flow a:hover,
+footer a:hover {
+  color: var(--green-bright);
+  text-decoration-color: var(--green);
+}
 
 .cm { color: var(--green); opacity: 0.65; }
 
@@ -540,13 +562,6 @@ footer {
   font-size: 0.6875rem;
   color: var(--dim);
 }
-
-footer a {
-  color: inherit;
-  text-decoration: none;
-}
-
-footer a:hover { color: var(--green); }
 
 /* ── 11. code-doc — editor note, not terminal (delad) ── */
 .code-doc {
