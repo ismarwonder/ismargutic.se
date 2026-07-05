@@ -252,6 +252,15 @@ body::after {
 
 .status-branch { color: var(--green); }
 
+a.status-branch {
+  text-decoration: none;
+}
+
+a.status-branch:hover {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
 .status-sep { color: var(--border); }
 
 /* ── 6. hero ── */
