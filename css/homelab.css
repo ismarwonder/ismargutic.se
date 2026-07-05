@@ -38,7 +38,7 @@ button.status-branch:hover,
 
 .status-wrap {
   width: 100%;
-  max-width: 100%;
+  max-width: 40rem;
   margin-bottom: 3rem;
 }
 
@@ -54,12 +54,13 @@ button.status-branch:hover,
 }
 
 .status-wrap--open .status {
+  width: 100%;
   border-radius: 0.5rem 0.5rem 0 0;
   border-bottom-color: transparent;
 }
 
 .status-panel {
-  max-width: 40rem;
+  width: 100%;
 }
 
 .code-doc--panel {
