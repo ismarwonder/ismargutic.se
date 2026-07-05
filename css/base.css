@@ -377,19 +377,21 @@ h2 {
   border-bottom: 1px solid var(--shell-border);
 }
 
-.shell-bar span {
+.shell-bar > span:nth-child(-n+3) {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.shell-bar span:nth-child(1) { background: #e07070; }
-.shell-bar span:nth-child(2) { background: #d4a030; }
-.shell-bar span:nth-child(3) { background: #4caf78; }
+.shell-bar > span:nth-child(1) { background: #e07070; }
+.shell-bar > span:nth-child(2) { background: #d4a030; }
+.shell-bar > span:nth-child(3) { background: #4caf78; }
 
 .shell-title {
   margin-left: 0.4rem;
+  flex: 1;
+  min-width: 0;
   font-family: var(--mono);
   font-size: 0.6875rem;
   color: #5f6b62;
