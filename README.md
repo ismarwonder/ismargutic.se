@@ -10,7 +10,9 @@ index.html        landningssida
 homelab.html      dokumentation av homelabben (Proxmox/OMV/Immich/Tailscale)
 status.html       visar rå driftdata
 api/status.json   live-status (pool, backup) — skrivs av servern, inte av handen
-site.css          delade stilar
+css/base.css      delad grund + komponenter
+css/homelab.css   stilar unika för homelab-sidan
+css/status.css    stilar unika för status-sidan
 site.js           delade interaktioner (tema, typewriter, live-status, m.m.)
 ```
 

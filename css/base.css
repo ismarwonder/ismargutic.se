@@ -1,0 +1,666 @@
+/* ismargutic.se — base styles
+ *
+ * Delad grund + komponenter som används på flera sidor. Sidspecifik stil
+ * ligger i css/homelab.css och css/status.css.
+ *
+ * Innehåll:
+ *   1. Reset + design tokens
+ *   2. Layout (body, bakgrund, .page)
+ *   3. Animationer (reveal, keyframes)
+ *   4. Toolbar + temaknapp + nav
+ *   5. Status-pill (delad bas)
+ *   6. Hero
+ *   7. Typografi (rubriker, prose, cursor-line)
+ *   8. Shell / terminal-komponent
+ *   9. Glow-card
+ *  10. Aside + footer
+ *  11. Code-doc (delad)
+ *  12. View transitions
+ *  13. Mobil (delade element)
+ */
+
+/* ── 1. reset + tokens ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #e8efe9;
+  --surface: #f6faf7;
+  --surface-2: #edf3ef;
+  --text: #141a16;
+  --muted: #46524b;
+  --dim: #728078;
+  --green: #16803f;
+  --green-bright: #1fbf5a;
+  --green-glow: rgba(31, 191, 90, 0.35);
+  --green-soft: #c8e8d4;
+  --amber: #9a7018;
+  --rose: #a84848;
+  --border: #c5d4cb;
+  --shell-bg: #161b18;
+  --shell-bar: #121614;
+  --shell-border: #2a332d;
+  --card: rgba(246, 250, 247, 0.88);
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
+}
+
+/* ── 2. layout ── */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 1.0625rem;
+  min-height: 100vh;
+}
+
+/* layered bg */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  background:
+    radial-gradient(ellipse 90% 60% at 0% -10%, rgba(31, 191, 90, 0.12), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(42, 100, 148, 0.06), transparent 50%);
+}
+
+body::after {
+  background-image:
+    radial-gradient(circle at center, rgba(22, 128, 63, 0.14) 1px, transparent 1px),
+    linear-gradient(rgba(22, 128, 63, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 128, 63, 0.035) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px, 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 100% 80% at 50% 0%, #000 20%, transparent 75%);
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+  overflow-anchor: auto;
+}
+
+/* ── 3. animationer ── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { animation: rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .reveal-1 { animation-delay: 0.05s; }
+  .reveal-2 { animation-delay: 0.12s; }
+  .reveal-3 { animation-delay: 0.2s; }
+  .reveal-4 { animation-delay: 0.28s; }
+  .reveal-5 { animation-delay: 0.36s; }
+  .reveal-6 { animation-delay: 0.44s; }
+  .reveal-7 { animation-delay: 0.52s; }
+  .reveal-8 { animation-delay: 0.6s; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ── 4. toolbar + tema + nav ── */
+.page-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.page-toolbar .top-nav {
+  margin-bottom: 0;
+}
+
+.page-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.theme-toggle {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--dim);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.theme-toggle:hover { color: var(--green); border-color: var(--green-soft); }
+
+.top-nav {
+  margin-bottom: 1.25rem;
+}
+
+.top-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--dim);
+  text-decoration: none;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background: var(--card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.top-nav a:hover {
+  color: var(--green);
+  border-color: var(--green-soft);
+}
+
+/* ── 5. status pill (delad bas) ── */
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--dim);
+  margin-bottom: 3rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 10px var(--green-glow);
+  flex-shrink: 0;
+}
+
+.status-branch { color: var(--green); }
+
+.status-sep { color: var(--border); }
+
+/* ── 6. hero ── */
+.hero {
+  position: relative;
+  margin-bottom: 3.5rem;
+}
+
+.hero--watermark-home::before { content: "~/ismargutic.se"; }
+.hero--watermark-lab::before { content: "~/pages/homelab"; }
+
+.hero::before {
+  position: absolute;
+  top: -0.75rem;
+  left: -0.25rem;
+  font-family: var(--mono);
+  font-size: clamp(2rem, 10vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: var(--green);
+  opacity: 0.06;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 8vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.hero-intro {
+  font-size: 1.125rem;
+  color: var(--muted);
+  max-width: 36rem;
+  margin-bottom: 1rem;
+}
+
+.hero-aside {
+  font-size: 0.9375rem;
+  color: var(--dim);
+  max-width: 36rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--green-soft);
+}
+
+/* ── 7. typografi ── */
+.cursor-line::after {
+  content: "▋";
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--green-bright);
+  animation: blink 1.05s step-end infinite;
+}
+
+.cursor-line--typing::after {
+  animation: blink 0.85s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-line::after { animation: none; opacity: 0.6; }
+}
+
+section { margin-bottom: 4rem; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 1rem;
+}
+
+.section-label::before {
+  content: "// ";
+  color: var(--green);
+}
+
+h2 {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.prose { color: var(--muted); }
+.prose p + p { margin-top: 1rem; }
+
+.cm { color: var(--green); opacity: 0.65; }
+
+/* ── 8. shell / terminal-komponent ── */
+.shell {
+  border-radius: 0.625rem;
+  overflow: hidden;
+  border: 1px solid var(--shell-border);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 20px 50px rgba(10, 20, 14, 0.12);
+}
+
+.shell--spaced { margin-top: 1.5rem; }
+.shell--spaced-bottom { margin-bottom: 2.5rem; }
+
+.shell-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.875rem;
+  background: var(--shell-bar);
+  border-bottom: 1px solid var(--shell-border);
+}
+
+.shell-bar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.shell-bar span:nth-child(1) { background: #e07070; }
+.shell-bar span:nth-child(2) { background: #d4a030; }
+.shell-bar span:nth-child(3) { background: #4caf78; }
+
+.shell-title {
+  margin-left: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: #5f6b62;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shell-body {
+  padding: 1.125rem 1rem 1.25rem;
+  background: var(--shell-bg);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  color: #8fa396;
+}
+
+.shell-body pre {
+  margin: 0;
+  font: inherit;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.shell-prompt { color: var(--green-bright); }
+.shell-cmd { color: #c8d4cc; }
+.shell-comment { color: #4d5a52; display: block; margin-top: 0.75rem; }
+
+.shell-body .c { color: #5a665e; }
+.shell-body .g { color: #5ecf8a; }
+.shell-body .a { color: #e8c060; }
+.shell-body .b { color: #7ab8e8; }
+
+.shell-link {
+  display: block;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  background: rgba(31, 191, 90, 0.06);
+  border: 1px solid rgba(31, 191, 90, 0.18);
+  border-radius: 0.375rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.shell-link:hover {
+  background: rgba(31, 191, 90, 0.11);
+  border-color: rgba(31, 191, 90, 0.35);
+  transform: translateX(3px);
+}
+
+.shell-link-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.shell-link .perm { color: #5f8a72; }
+.shell-link .name { color: #e8f5ec; font-weight: 500; }
+.shell-link .open {
+  color: var(--green-bright);
+  font-size: 0.6875rem;
+  flex-shrink: 0;
+}
+
+.shell-link .desc {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: #7a8b80;
+  line-height: 1.5;
+}
+
+/* ── 9. glow card ── */
+.glow-card {
+  position: relative;
+  padding: 1px;
+  border-radius: 0.625rem;
+  background: var(--surface-2);
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--green-bright) 80deg,
+    transparent 160deg
+  );
+  opacity: 0.4;
+  animation: glow-spin 8s linear infinite;
+}
+
+@keyframes glow-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-card::before { animation: none; opacity: 0.15; }
+}
+
+.glow-card-inner {
+  position: relative;
+  z-index: 1;
+  padding: 1rem 1.125rem;
+  background: var(--surface);
+  border-radius: calc(0.625rem - 1px);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+.glow-card-inner .kw { color: var(--green); }
+.glow-card-inner .str { color: var(--muted); }
+
+/* ── 10. aside + footer ── */
+.aside {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--dim);
+  max-width: 36rem;
+  line-height: 1.7;
+}
+
+footer {
+  margin-top: 4rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--border);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--dim);
+}
+
+footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer a:hover { color: var(--green); }
+
+/* ── 11. code-doc — editor note, not terminal (delad) ── */
+.code-doc {
+  margin-top: 0.625rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.code-doc-file {
+  margin: 0;
+  padding: 0.5rem 0.875rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--green);
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-doc-body {
+  padding: 0.875rem 1rem 1rem;
+}
+
+.code-doc-lead {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-bottom: 0.875rem;
+  line-height: 1.55;
+}
+
+.code-doc-flow {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.code-doc-flow li + li { margin-top: 0.35rem; }
+
+.code-doc-flow strong {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.code-doc-meta {
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  color: var(--dim);
+}
+
+.code-doc-dl {
+  margin: 0;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.code-doc-dl div {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.625rem;
+  align-items: baseline;
+  padding-top: 0.625rem;
+  border-top: 1px dashed var(--border);
+}
+
+.code-doc-dl dt {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--green);
+}
+
+.code-doc-dl dd {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.code-doc-dl code {
+  font-family: var(--mono);
+  font-size: 0.75em;
+  padding: 0.1em 0.3em;
+  background: var(--surface-2);
+  border-radius: 0.2rem;
+}
+
+.code-doc-pre {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.65;
+  color: var(--muted);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.code-doc-pre .kw { color: #7a4fa0; }
+.code-doc-pre .ty { color: #2a6494; }
+.code-doc-pre .prop { color: var(--text); }
+.code-doc-pre .cm { color: var(--dim); }
+
+/* ── 12. view transitions ── */
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.25s;
+  }
+}
+
+/* ── 13. mobil (delade element) ── */
+@media (max-width: 640px) {
+  .page {
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .page-toolbar {
+    margin-bottom: 1rem;
+  }
+
+  .status {
+    width: 100%;
+    gap: 0.35rem 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.625rem;
+    line-height: 1.45;
+  }
+
+  .code-doc-body {
+    padding: 0.75rem 0.875rem 0.875rem;
+  }
+
+  .code-doc-flow {
+    padding-left: 1.125rem;
+    font-size: 0.75rem;
+  }
+
+  .code-doc-dl div {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .code-doc-dl dd {
+    font-size: 0.75rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.875rem, 9vw, 2.5rem);
+  }
+
+  .shell-body,
+  .shell-body pre {
+    font-size: 0.6875rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 420px) {
+  .code-doc-dl div { grid-template-columns: 1fr; gap: 0.2rem; }
+}

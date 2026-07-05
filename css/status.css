@@ -1,0 +1,57 @@
+/* ismargutic.se — status page styles
+ *
+ * Endast delar som är unika för status.html. Delad grund/komponenter
+ * (layout, code-doc, aside …) ligger i css/base.css.
+ */
+
+/* status page json block — follows page theme, not terminal shell */
+.status-page {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+}
+
+.json-pre {
+  margin-top: 1rem;
+  padding: 1rem 1.125rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  overflow: auto;
+}
+
+/* live status fun fact */
+.status-funfact {
+  margin: 1rem 0 2.5rem;
+  max-width: 40rem;
+}
+
+.status-funfact summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  color: var(--dim);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.status-funfact summary::-webkit-details-marker { display: none; }
+
+.status-funfact summary:hover { color: var(--green); }
+
+.status-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 8px var(--green-glow);
+  flex-shrink: 0;
+}
+
+.status-funfact[open] summary { color: var(--green); margin-bottom: 0.125rem; }
