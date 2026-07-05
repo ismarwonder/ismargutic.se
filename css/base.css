@@ -271,6 +271,7 @@ a.status-branch:hover {
 
 .hero--watermark-home::before { content: "~/ismargutic.se"; }
 .hero--watermark-lab::before { content: "~/pages/homelab"; }
+.hero--watermark-compys::before { content: "~/pages/compys"; }
 
 .hero::before {
   position: absolute;
