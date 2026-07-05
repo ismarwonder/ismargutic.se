@@ -4,7 +4,7 @@
  * ligger i css/homelab.css och css/status.css.
  *
  * Innehåll:
- *   1. Reset + design tokens
+ *   1. Reset + design tokens (+ dark mode)
  *   2. Layout (body, bakgrund, .page)
  *   3. Animationer (reveal, keyframes)
  *   4. Toolbar + temaknapp + nav
@@ -43,6 +43,39 @@
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --sans: "IBM Plex Sans", system-ui, sans-serif;
   --serif: "Instrument Serif", Georgia, serif;
+}
+
+/* dark mode — explicit toggle wins, annars följ systemets preferens */
+[data-theme="dark"] {
+  --bg: #0f1411;
+  --surface: #161c18;
+  --surface-2: #1a221c;
+  --text: #e8f0ea;
+  --muted: #9aab9f;
+  --dim: #6a7a70;
+  --border: #2a352e;
+  --green-soft: #1a3d28;
+  --shell-bg: #0a0e0c;
+  --shell-bar: #060908;
+  --shell-border: #1e2822;
+  --card: rgba(22, 28, 24, 0.94);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1411;
+    --surface: #161c18;
+    --surface-2: #1a221c;
+    --text: #e8f0ea;
+    --muted: #9aab9f;
+    --dim: #6a7a70;
+    --border: #2a352e;
+    --green-soft: #1a3d28;
+    --shell-bg: #0a0e0c;
+    --shell-bar: #060908;
+    --shell-border: #1e2822;
+    --card: rgba(22, 28, 24, 0.94);
+  }
 }
 
 /* ── 2. layout ── */
@@ -151,6 +184,16 @@ body::after {
 }
 
 .theme-toggle:hover { color: var(--green); border-color: var(--green-soft); }
+
+[data-theme="dark"] .theme-toggle {
+  background: var(--card);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle {
+    background: var(--card);
+  }
+}
 
 .top-nav {
   margin-bottom: 1.25rem;
