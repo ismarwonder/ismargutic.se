@@ -563,6 +563,18 @@ footer {
   color: var(--dim);
 }
 
+footer p {
+  margin: 0;
+}
+
+footer p + p {
+  margin-top: 0.4rem;
+}
+
+.site-links {
+  font-size: 0.75rem;
+}
+
 /* ── 11. code-doc — editor note, not terminal (delad) ── */
 .code-doc {
   margin-top: 0.625rem;
